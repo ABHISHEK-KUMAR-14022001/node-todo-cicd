@@ -9,9 +9,9 @@ pipeline {
         }
         stage("Build & Test"){
             steps{
-                bat 'docker stop node-app-todo'
-                bat 'docker rm node-app-todo'
-                bat 'docker build -t abhishekkumar1402/node-app .'
+               script {
+                    bat 'docker build -t abhishekkumar1402/node-app .'
+                }
             }
         }
         stage("Push on Dockerhub"){
@@ -29,7 +29,7 @@ pipeline {
         stage("Kubernetes"){
             steps{
                script{
-               kubernetesDeploy (configs: 'service.yaml',kubeconfigId: 'k8sconfigure')
+               kubernetesDeploy (configs: 'deployment.yaml',kubeconfigId: 'k8sconnect')
             }
             }
         }
